@@ -9,6 +9,10 @@ tags: ["R Markdown", "plot", "regression"]
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
+install.packages("opendatatoronto")
+library(opendatatoronto)
+packages <- list_packages(limit = 10)
+packages
 ```
 
 # abstraction
