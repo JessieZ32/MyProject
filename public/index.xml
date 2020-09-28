@@ -6,7 +6,18 @@
     <description>Recent content on Yijie Zhao&#39;s website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Sep 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Sep 2020 21:13:14 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data Analysis on COVID-19 Cases</title>
+      <link>/2020/09/27/data-analysis-on-covid-19-cases/</link>
+      <pubDate>Sun, 27 Sep 2020 21:13:14 -0500</pubDate>
+      
+      <guid>/2020/09/27/data-analysis-on-covid-19-cases/</guid>
+      <description>I. Abstraction In 2020, COVID-19 outbreak hits the world, no exception for Toronto. This analysis will focus on several variables of COVID-19 cases in Toronto that people mostly concern about, based on data from Open Data Toronto.
+ II. Introduction In the following context, I will use the data of COVID-19 cases in Toronto from Open Data Toronto website to discuss on several points with some graphs.
+#III. Data Discussion</description>
+    </item>
+    
     <item>
       <title>My Project 2</title>
       <link>/2020/09/27/my-project-2/</link>

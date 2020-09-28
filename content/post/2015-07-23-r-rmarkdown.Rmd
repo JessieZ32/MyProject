@@ -1,5 +1,5 @@
 ---
-title: "My Project"
+title: "Data Analysis on COVID-19 Cases"
 author: "Yijie Zhao"
 date: 2020-09-27T21:13:14-05:00
 bibliography: "reference.bib"
@@ -9,46 +9,95 @@ tags: ["R Markdown", "plot", "regression"]
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
-install.packages("opendatatoronto")
+library(tidyverse)
+```
+
+# I. Abstraction
+
+In 2020, COVID-19 outbreak hits the world, no exception for Toronto. This analysis will focus on several variables of COVID-19 cases in Toronto that people mostly concern about, based on data from Open Data Toronto. 
+
+
+# II. Introduction
+
+In the following context, I will use the data of COVID-19 cases in Toronto from Open Data Toronto website to discuss on several points with some graphs.
+
+
+#III. Data Discussion
+```{r, echo=FALSE}
 library(opendatatoronto)
-packages <- list_packages(limit = 10)
-packages
+ 
+COVID19_cases_package <- show_package("64b54586-6180-4485-83eb-81e8fae3b8fe")
+ 
+COVID19_cases_resources <-
+  list_package_resources("64b54586-6180-4485-83eb-81e8fae3b8fe")
+ 
+COVID19_resources <- 
+  filter(COVID19_cases_resources, tolower(format) %in% c('csv', 'geojson'))
+ 
+COVID19_cases_data <- 
+  filter(COVID19_resources, row_number()==1) %>% get_resource()
+
+glimpse(COVID19_cases_data)
 ```
 
-# abstraction
-balabalA. We use @citetidyverse
+The data shows multiple types of information related to the outbreak of COVID-19 in Toronto, from January to September 23, 2020. As the data frame shows above, this data set contains 18 variables, id, Assigned_ID, Outbreak Associated, Age group, Neighbourhood Name, FSA, Source of Infection, Classification, Episode Date, Reported Date, Client Gender, Outcome, Currently Hospitalized, Currently in ICU, Currently Intubated, Ever Hospitalized, Ever in ICU and Ever Intubated. Except that id and Assigned_ID are quantitative variables, all the rest 16 variables are categorical variables.
 
-# introduction
-balabala
+Among these variables, I mainly concern about three things: 
 
-#data introduction
-balabala
+1. Age Group:
+   
+   how old the ill people are when they get infected.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+2. Neighbourhood Name:
 
-You can embed an R code chunk like this:
+   among 140 geographical distinct, which neighbourhood most infected people live.
+   
+3. Source of Infection:
 
-```{r cars}
-summary(cars)
-fit <- lm(dist ~ speed, data = cars)
-fit
+   how most people get infected, for example, travel, close contact with a case, institutional setting, healthcare setting, community or pending, unknow. 
+   
+
+# IV. Graph Analysis
+
+1. Age Group
+```{r, echo=FALSE}
+age_infected <- COVID19_cases_data %>%
+  group_by(`Age Group`)%>%
+  summarise(counts = n()) 
+
+ggplot(age_infected,
+       aes(x = `Age Group`, y = counts))+
+  geom_bar(stat="identity", color = "steelblue", fill="steelblue")+ 
+  theme_minimal()
 ```
 
-# Including Plots
+2. Neighbourhood Name
+```{r, echo=FALSE}
+neighbourhood <- COVID19_cases_data %>%
+  group_by(`Neighbourhood Name`)%>%
+  summarise(counts = n()) 
 
-You can also embed plots. See Figure \@ref(fig:pie) for example:
-
-```{r pie, fig.cap='A fancy pie chart.', tidy=FALSE}
-par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c('Sky', 'Sunny side of pyramid', 'Shady side of pyramid'),
-  col = c('#0292D8', '#F7EA39', '#C4B632'),
-  init.angle = -50, border = NA
-)
+ggplot(neighbourhood,
+       aes(x = `Neighbourhood Name`, y = counts))+
+  geom_bar(stat="identity", color = "steelblue", fill="steelblue")+ 
+  theme_minimal()
 ```
+
+
+3. Source of Infection
+```{r, echo=FALSE}
+infection_source <- COVID19_cases_data %>%
+  group_by(`Source of Infection`)%>%
+  summarise(counts = n()) 
+
+ggplot(infection_source,
+       aes(x = `Source of Infection`, y = counts))+
+  geom_bar(stat="identity", color = "steelblue", fill="steelblue")+ 
+  theme_minimal()
+```
+
 
 # reference
 
-
-
+We use @citetidyverse
+We use @opendatatoronto
